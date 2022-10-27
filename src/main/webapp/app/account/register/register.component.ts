@@ -20,7 +20,7 @@ export class RegisterComponent implements AfterViewInit {
   errorUserExists = false;
   success = false;
 
-  selectedId = '';
+  selectedId = null;
 
   registerForm = this.fb.group({
     login: [
@@ -35,6 +35,7 @@ export class RegisterComponent implements AfterViewInit {
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
     confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    selectedId: ['', [Validators.required]],
     nombres: ['', [Validators.required]],
     apellidos: ['', [Validators.required]],
     documento: ['', [Validators.required]],
@@ -45,6 +46,7 @@ export class RegisterComponent implements AfterViewInit {
   constructor(private translateService: TranslateService, private registerService: RegisterService, private fb: FormBuilder) {}
 
   ngAfterViewInit(): void {
+    this.selectedId = null;
     if (this.login) {
       this.login.nativeElement.focus();
     }
@@ -62,7 +64,7 @@ export class RegisterComponent implements AfterViewInit {
     } else {
       const login = this.registerForm.get(['login'])!.value;
       const email = this.registerForm.get(['email'])!.value;
-      const tipoDocumento = this.selectedId;
+      const tipoDocumento = this.selectedId!;
       const firstName = this.registerForm.get(['nombres'])!.value;
       const lastName = this.registerForm.get(['apellidos'])!.value;
       const numeroDocumento = this.registerForm.get(['documento'])!.value;
