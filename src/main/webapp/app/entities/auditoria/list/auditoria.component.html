@@ -7,16 +7,6 @@
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="pruebapeigoApp.auditoria.home.refreshListLabel">Refresh List</span>
       </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-auditoria"
-        [routerLink]="['/auditoria/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="pruebapeigoApp.auditoria.home.createLabel"> Create a new Auditoria </span>
-      </button>
     </div>
   </h2>
 
@@ -53,34 +43,6 @@
           <td>{{ auditoria.fechaModificacion | formatMediumDatetime }}</td>
           <td>{{ auditoria.request }}</td>
           <td>{{ auditoria.response }}</td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/auditoria', auditoria.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/auditoria', auditoria.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
-
-              <button type="submit" (click)="delete(auditoria)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
         </tr>
       </tbody>
     </table>

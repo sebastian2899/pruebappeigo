@@ -4,7 +4,7 @@
       "home": {
         "title": "Auditorias",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Auditoria",
+        "createLabel": "Crear nueva Auditoria",
         "createOrEditLabel": "Crear o editar Auditoria",
         "notFound": "Ningún Auditorias encontrado"
       },

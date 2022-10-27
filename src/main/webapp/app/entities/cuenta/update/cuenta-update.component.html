@@ -39,19 +39,6 @@
             </option>
           </select>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="pruebapeigoApp.cuenta.auditoria" for="field_auditoria">Auditoria</label>
-          <select class="form-control" id="field_auditoria" data-cy="auditoria" name="auditoria" formControlName="auditoria">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="auditoriaOption.id === editForm.get('auditoria')!.value?.id ? editForm.get('auditoria')!.value : auditoriaOption"
-              *ngFor="let auditoriaOption of auditoriasCollection; trackBy: trackAuditoriaById"
-            >
-              {{ auditoriaOption.id }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>

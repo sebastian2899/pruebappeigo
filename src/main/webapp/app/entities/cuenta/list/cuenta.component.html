@@ -36,7 +36,6 @@
           <th scope="col"><span jhiTranslate="pruebapeigoApp.cuenta.numeroCuenta">Numero Cuenta</span></th>
           <th scope="col"><span jhiTranslate="pruebapeigoApp.cuenta.saldo">Saldo</span></th>
           <th scope="col"><span jhiTranslate="pruebapeigoApp.cuenta.tipoCuenta">Tipo Cuenta</span></th>
-          <th scope="col"><span jhiTranslate="pruebapeigoApp.cuenta.auditoria">Auditoria</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -48,11 +47,6 @@
           <td>{{ cuenta.numeroCuenta }}</td>
           <td>{{ cuenta.saldo }}</td>
           <td jhiTranslate="{{ 'pruebapeigoApp.TipoCuenta.' + cuenta.tipoCuenta }}">{{ cuenta.tipoCuenta }}</td>
-          <td>
-            <div *ngIf="cuenta.auditoria">
-              <a [routerLink]="['/auditoria', cuenta.auditoria?.id, 'view']">{{ cuenta.auditoria?.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/cuenta', cuenta.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

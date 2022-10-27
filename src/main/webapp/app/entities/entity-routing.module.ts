@@ -5,11 +5,6 @@ import { RouterModule } from '@angular/router';
   imports: [
     RouterModule.forChild([
       {
-        path: 'persona',
-        data: { pageTitle: 'pruebapeigoApp.persona.home.title' },
-        loadChildren: () => import('./persona/persona.module').then(m => m.PersonaModule),
-      },
-      {
         path: 'cuenta',
         data: { pageTitle: 'pruebapeigoApp.cuenta.home.title' },
         loadChildren: () => import('./cuenta/cuenta.module').then(m => m.CuentaModule),

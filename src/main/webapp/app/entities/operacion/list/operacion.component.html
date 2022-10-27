@@ -37,8 +37,6 @@
           <th scope="col"><span jhiTranslate="pruebapeigoApp.operacion.monto">Monto</span></th>
           <th scope="col"><span jhiTranslate="pruebapeigoApp.operacion.cuentaOrigen">Cuenta Origen</span></th>
           <th scope="col"><span jhiTranslate="pruebapeigoApp.operacion.cuentaDestino">Cuenta Destino</span></th>
-          <th scope="col"><span jhiTranslate="pruebapeigoApp.operacion.auditoria">Auditoria</span></th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -50,39 +48,7 @@
           <td>{{ operacion.monto }}</td>
           <td>{{ operacion.cuentaOrigen }}</td>
           <td>{{ operacion.cuentaDestino }}</td>
-          <td>
-            <div *ngIf="operacion.auditoria">
-              <a [routerLink]="['/auditoria', operacion.auditoria?.id, 'view']">{{ operacion.auditoria?.id }}</a>
-            </div>
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/operacion', operacion.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/operacion', operacion.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
-
-              <button type="submit" (click)="delete(operacion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
+        
         </tr>
       </tbody>
     </table>
