@@ -1,17 +1,15 @@
 package co.com.prueba.peigo.service.dto;
 
+import co.com.prueba.peigo.config.Constants;
+import co.com.prueba.peigo.domain.Authority;
+import co.com.prueba.peigo.domain.User;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import co.com.prueba.peigo.config.Constants;
-import co.com.prueba.peigo.domain.Authority;
-import co.com.prueba.peigo.domain.User;
 
 /**
  * A DTO representing a user, with his authorities.
@@ -31,9 +29,17 @@ public class AdminUserDTO {
     @Size(max = 50)
     private String lastName;
 
+    private String tipoDocumento;
+
+    private String numeroDocumento;
+
     @Email
     @Size(min = 5, max = 254)
     private String email;
+
+    private String telefono;
+
+    private String direccion;
 
     @Size(max = 256)
     private String imageUrl;
@@ -175,6 +181,38 @@ public class AdminUserDTO {
 
     public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     // prettier-ignore

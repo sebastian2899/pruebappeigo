@@ -20,6 +20,8 @@ export class RegisterComponent implements AfterViewInit {
   errorUserExists = false;
   success = false;
 
+  selectedId = '';
+
   registerForm = this.fb.group({
     login: [
       '',
@@ -33,6 +35,11 @@ export class RegisterComponent implements AfterViewInit {
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
     confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    nombres: ['', [Validators.required]],
+    apellidos: ['', [Validators.required]],
+    documento: ['', [Validators.required]],
+    telefono: ['', [Validators.required]],
+    direccion: ['', [Validators.required]],
   });
 
   constructor(private translateService: TranslateService, private registerService: RegisterService, private fb: FormBuilder) {}
@@ -55,8 +62,25 @@ export class RegisterComponent implements AfterViewInit {
     } else {
       const login = this.registerForm.get(['login'])!.value;
       const email = this.registerForm.get(['email'])!.value;
+      const tipoDocumento = this.selectedId;
+      const firstName = this.registerForm.get(['nombres'])!.value;
+      const lastName = this.registerForm.get(['apellidos'])!.value;
+      const numeroDocumento = this.registerForm.get(['documento'])!.value;
+      const telefono = this.registerForm.get(['telefono'])!.value;
+      const direccion = this.registerForm.get(['direccion'])!.value;
       this.registerService
-        .save({ login, email, password, langKey: this.translateService.currentLang })
+        .save({
+          login,
+          email,
+          password,
+          langKey: this.translateService.currentLang,
+          firstName,
+          lastName,
+          tipoDocumento,
+          numeroDocumento,
+          telefono,
+          direccion,
+        })
         .subscribe({ next: () => (this.success = true), error: response => this.processError(response) });
     }
   }

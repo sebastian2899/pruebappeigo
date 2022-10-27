@@ -1,24 +1,5 @@
 package co.com.prueba.peigo.service;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.cache.CacheManager;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import co.com.prueba.peigo.config.Constants;
 import co.com.prueba.peigo.domain.Authority;
 import co.com.prueba.peigo.domain.User;
@@ -28,6 +9,23 @@ import co.com.prueba.peigo.security.AuthoritiesConstants;
 import co.com.prueba.peigo.security.SecurityUtils;
 import co.com.prueba.peigo.service.dto.AdminUserDTO;
 import co.com.prueba.peigo.service.dto.UserDTO;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.CacheManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.security.RandomUtil;
 
 /**
@@ -126,6 +124,11 @@ public class UserService {
         if (userDTO.getEmail() != null) {
             newUser.setEmail(userDTO.getEmail().toLowerCase());
         }
+        newUser.setNumeroDocumento(userDTO.getNumeroDocumento());
+        newUser.setTipoDocumento(userDTO.getTipoDocumento());
+        newUser.setDireccion(userDTO.getDireccion());
+        newUser.setTelefono(userDTO.getTelefono());
+        newUser.setActivated(true);
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
         // new user is not active
