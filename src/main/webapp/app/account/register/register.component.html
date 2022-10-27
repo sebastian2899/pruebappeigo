@@ -148,8 +148,8 @@
           </div>
           <div class="mb-2 col-md-6 form-group">
             <label class="form-label" for="tipoId">Tipo documento ID</label>
-            <select id="selectedId" data-cy="selectedId" name="selectedId" formControlName="selectedId" [(ngModel)]="selectedId">
-              <option [ngValue]="null" selected>¿Donde vives?</option>
+            <select class="form-control"  id="selectedId" data-cy="selectedId" name="selectedId" formControlName="selectedId" [(ngModel)]="selectedId">
+              <option [ngValue]="null" selected>Seleccione</option>
               <option ngValue="C.C">C.C</option>
               <option ngValue="Cedula extranjera">Cedula extranjera</option>
               <option ngValue="Pasaporte">Pasaporte</option>
