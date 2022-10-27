@@ -1,9 +1,11 @@
 package co.com.prueba.peigo.security;
 
-import co.com.prueba.peigo.config.Constants;
 import java.util.Optional;
+
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
+
+import co.com.prueba.peigo.config.Constants;
 
 /**
  * Implementation of {@link AuditorAware} based on Spring Security.

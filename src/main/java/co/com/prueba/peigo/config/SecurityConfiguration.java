@@ -1,13 +1,10 @@
 package co.com.prueba.peigo.config;
 
-import co.com.prueba.peigo.security.*;
-import co.com.prueba.peigo.security.jwt.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +15,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
+
+import co.com.prueba.peigo.security.AuthoritiesConstants;
+import co.com.prueba.peigo.security.jwt.JWTConfigurer;
+import co.com.prueba.peigo.security.jwt.TokenProvider;
 import tech.jhipster.config.JHipsterProperties;
 
 @EnableWebSecurity

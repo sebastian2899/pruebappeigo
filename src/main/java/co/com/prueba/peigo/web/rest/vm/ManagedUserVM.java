@@ -1,7 +1,8 @@
 package co.com.prueba.peigo.web.rest.vm;
 
-import co.com.prueba.peigo.service.dto.AdminUserDTO;
 import javax.validation.constraints.Size;
+
+import co.com.prueba.peigo.service.dto.AdminUserDTO;
 
 /**
  * View Model extending the AdminUserDTO, which is meant to be used in the user management UI.

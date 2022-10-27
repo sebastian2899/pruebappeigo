@@ -1,15 +1,21 @@
 package co.com.prueba.peigo.service.mapper;
 
-import co.com.prueba.peigo.domain.Authority;
-import co.com.prueba.peigo.domain.User;
-import co.com.prueba.peigo.service.dto.AdminUserDTO;
-import co.com.prueba.peigo.service.dto.UserDTO;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
+
+import co.com.prueba.peigo.domain.Authority;
+import co.com.prueba.peigo.domain.User;
+import co.com.prueba.peigo.service.dto.AdminUserDTO;
+import co.com.prueba.peigo.service.dto.UserDTO;
 
 /**
  * Mapper for the entity {@link User} and its DTO called {@link UserDTO}.
