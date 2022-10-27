@@ -65,10 +65,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
+    @Column(name = "tipo_documento")
+    private String tipoDocumento;
+
+    @Column(name = "numero_documento")
+    private String numeroDocumento;
+
     @Email
     @Size(min = 5, max = 254)
     @Column(length = 254, unique = true)
     private String email;
+
+    @Column(name = "telefono")
+    private String telefono;
+
+    @Column(name = "direccion")
+    private String direccion;
 
     @NotNull
     @Column(nullable = false)
@@ -106,5 +118,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
+  
   
 }

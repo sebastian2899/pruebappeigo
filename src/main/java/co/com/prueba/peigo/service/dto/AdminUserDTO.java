@@ -33,9 +33,17 @@ public class AdminUserDTO {
     @Size(max = 50)
     private String lastName;
 
+    private String tipoDocumento;
+
+    private String numeroDocumento;
+
     @Email
     @Size(min = 5, max = 254)
     private String email;
+
+    private String telefono;
+
+    private String direccion;
 
     @Size(max = 256)
     private String imageUrl;
@@ -75,4 +83,5 @@ public class AdminUserDTO {
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
     }
 
+    
 }

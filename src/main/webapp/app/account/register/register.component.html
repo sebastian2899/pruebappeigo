@@ -123,6 +123,84 @@
           </div>
         </div>
 
+        <div class="d-flex">
+          <div>
+            <label class="form-label">Nombres</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombres"
+              name="nombres"
+              placeholder="Ingrese sus nombres"
+              formControlName="nombres"
+              data-cy="nombres"
+            />
+          </div>
+          <div>
+            <label class="form-label">Apellidos</label>
+            <input
+              type="text"
+              class="form-control"
+              id="apellidos"
+              name="apellidos"
+              placeholder="Ingrese sus apellidos"
+              formControlName="apellidos"
+              data-cy="apellidos"
+            />
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <div class="mb-3">
+            <label class="form-label" for="tipoId">Tipo documento ID</label>
+            <select [(ngModel)]="selectedId">
+              <option value="" selected>--Please choose an option--</option>
+              <option value="C.C">C.C</option>
+              <option value="Cedula extranjera">Cedula extranjera</option>
+              <option value="Pasaporte">Pasaporte</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Numero de documento</label>
+            <input
+              type="text"
+              class="form-control"
+              id="documento"
+              name="documento"
+              placeholder="Ingrese su número de documento"
+              formControlName="documento"
+              data-cy="documento"
+            />
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <div class="mb-3">
+            <label class="form-label">Numero de telefono</label>
+            <input
+              type="text"
+              class="form-control"
+              id="telefono"
+              name="telefono"
+              placeholder="Ingrese su número de documento"
+              formControlName="telefono"
+              data-cy="telefono"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Direccion</label>
+            <input
+              type="text"
+              class="form-control"
+              id="direccion"
+              name="direccion"
+              placeholder="Ingrese su direccion"
+              formControlName="direccion"
+              data-cy="direccion"
+            />
+          </div>
+        </div>
+
         <div class="mb-3">
           <label class="form-label" for="password" jhiTranslate="global.form.newpassword.label">New password</label>
           <input
