@@ -1,18 +1,25 @@
 package co.com.prueba.peigo.service.impl;
 
-import co.com.prueba.peigo.domain.Operacion;
-import co.com.prueba.peigo.repository.OperacionRepository;
-import co.com.prueba.peigo.service.OperacionService;
-import co.com.prueba.peigo.service.dto.OperacionDTO;
-import co.com.prueba.peigo.service.mapper.OperacionMapper;
+import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.gson.Gson;
+
+import co.com.prueba.peigo.domain.Operacion;
+import co.com.prueba.peigo.repository.OperacionRepository;
+import co.com.prueba.peigo.service.OperacionService;
+import co.com.prueba.peigo.service.TrazabilidadService;
+import co.com.prueba.peigo.service.dto.OperacionDTO;
+import co.com.prueba.peigo.service.dto.TrazabilidadDTO;
+import co.com.prueba.peigo.service.mapper.OperacionMapper;
 
 /**
  * Service Implementation for managing {@link Operacion}.
@@ -26,17 +33,34 @@ public class OperacionServiceImpl implements OperacionService {
     private final OperacionRepository operacionRepository;
 
     private final OperacionMapper operacionMapper;
-
-    public OperacionServiceImpl(OperacionRepository operacionRepository, OperacionMapper operacionMapper) {
+    
+    private final TrazabilidadService trazabilidadService;
+    
+    Gson gson = new Gson();
+    
+    public OperacionServiceImpl(OperacionRepository operacionRepository, OperacionMapper operacionMapper, TrazabilidadService trazabilidadService) {
         this.operacionRepository = operacionRepository;
         this.operacionMapper = operacionMapper;
+		this.trazabilidadService = trazabilidadService;
     }
+    
+    private TrazabilidadDTO crearRegistroAuditoria(OperacionDTO cuentaDTO, Operacion cuenta) {
+    	TrazabilidadDTO dto = new TrazabilidadDTO();
+    	dto.setRequest(gson.toJson(cuentaDTO));
+    	dto.setResponse(gson.toJson(cuenta));
+    	dto.setProceso(cuentaDTO.getId() != null ? "ACTUALIZACION OPERACION" : "CREACION OPERACION");
+    	dto.setUsuarioCreacion(cuentaDTO.getId() != null ? cuentaDTO.getUsuarioModificacion() : cuentaDTO.getUsuarioModificacion());
+		return dto;
+	}
 
     @Override
     public OperacionDTO save(OperacionDTO operacionDTO) {
         log.debug("Request to save Operacion : {}", operacionDTO);
         Operacion operacion = operacionMapper.toEntity(operacionDTO);
+        operacion.setFechaCreacion(Instant.now());
         operacion = operacionRepository.save(operacion);
+        //se registra trazabilidad del proceso
+        trazabilidadService.save(crearRegistroAuditoria(operacionDTO, operacion));
         return operacionMapper.toDto(operacion);
     }
 
@@ -44,7 +68,10 @@ public class OperacionServiceImpl implements OperacionService {
     public OperacionDTO update(OperacionDTO operacionDTO) {
         log.debug("Request to save Operacion : {}", operacionDTO);
         Operacion operacion = operacionMapper.toEntity(operacionDTO);
+        operacion.setFechaModificacion(Instant.now());
         operacion = operacionRepository.save(operacion);
+        //se registra trazabilidad del proceso
+        trazabilidadService.save(crearRegistroAuditoria(operacionDTO, operacion));
         return operacionMapper.toDto(operacion);
     }
 

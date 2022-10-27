@@ -26,13 +26,13 @@
             <column name="cuenta_destino" type="bigint">
                 <constraints nullable="true" />
             </column>
-             <column name="usuario_creacion" type="bigint">
+             <column name="usuario_creacion" type="varchar(200)">
                 <constraints nullable="true" />
             </column>
             <column name="fecha_creacion" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
-            <column name="usuario_modificacion" type="bigint">
+            <column name="usuario_modificacion" type="varchar(200)">
                 <constraints nullable="true" />
             </column>
             <column name="fecha_modificacion" type="${datetimeType}">

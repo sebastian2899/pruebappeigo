@@ -1,18 +1,25 @@
 package co.com.prueba.peigo.service.impl;
 
-import co.com.prueba.peigo.domain.Cuenta;
-import co.com.prueba.peigo.repository.CuentaRepository;
-import co.com.prueba.peigo.service.CuentaService;
-import co.com.prueba.peigo.service.dto.CuentaDTO;
-import co.com.prueba.peigo.service.mapper.CuentaMapper;
+import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.gson.Gson;
+
+import co.com.prueba.peigo.domain.Cuenta;
+import co.com.prueba.peigo.repository.CuentaRepository;
+import co.com.prueba.peigo.service.CuentaService;
+import co.com.prueba.peigo.service.TrazabilidadService;
+import co.com.prueba.peigo.service.dto.CuentaDTO;
+import co.com.prueba.peigo.service.dto.TrazabilidadDTO;
+import co.com.prueba.peigo.service.mapper.CuentaMapper;
 
 /**
  * Service Implementation for managing {@link Cuenta}.
@@ -26,25 +33,45 @@ public class CuentaServiceImpl implements CuentaService {
     private final CuentaRepository cuentaRepository;
 
     private final CuentaMapper cuentaMapper;
+    
+    private final TrazabilidadService trazabilidadService;
+    
+    Gson gson = new Gson();
 
-    public CuentaServiceImpl(CuentaRepository cuentaRepository, CuentaMapper cuentaMapper) {
+    public CuentaServiceImpl(CuentaRepository cuentaRepository, CuentaMapper cuentaMapper, TrazabilidadService trazabilidadService) {
         this.cuentaRepository = cuentaRepository;
         this.cuentaMapper = cuentaMapper;
+		this.trazabilidadService = trazabilidadService;
     }
 
     @Override
     public CuentaDTO save(CuentaDTO cuentaDTO) {
         log.debug("Request to save Cuenta : {}", cuentaDTO);
         Cuenta cuenta = cuentaMapper.toEntity(cuentaDTO);
+        cuenta.setFechaCreacion(Instant.now());
         cuenta = cuentaRepository.save(cuenta);
+        //se registra trazabilidad del proceso
+        trazabilidadService.save(crearRegistroAuditoria(cuentaDTO, cuenta));
         return cuentaMapper.toDto(cuenta);
     }
 
-    @Override
+    private TrazabilidadDTO crearRegistroAuditoria(CuentaDTO cuentaDTO, Cuenta cuenta) {
+    	TrazabilidadDTO dto = new TrazabilidadDTO();
+    	dto.setRequest(gson.toJson(cuentaDTO));
+    	dto.setResponse(gson.toJson(cuenta));
+    	dto.setProceso(cuentaDTO.getId() != null ? "ACTUALIZACION CUENTA" : "CREACION CUENTA");
+    	dto.setUsuarioCreacion(cuentaDTO.getId() != null ? cuentaDTO.getUsuarioModificacion() : cuentaDTO.getUsuarioModificacion());
+		return dto;
+	}
+
+	@Override
     public CuentaDTO update(CuentaDTO cuentaDTO) {
         log.debug("Request to save Cuenta : {}", cuentaDTO);
         Cuenta cuenta = cuentaMapper.toEntity(cuentaDTO);
         cuenta = cuentaRepository.save(cuenta);
+        cuenta.setFechaModificacion(Instant.now());
+        //se registra trazabilidad del proceso
+        trazabilidadService.save(crearRegistroAuditoria(cuentaDTO, cuenta));
         return cuentaMapper.toDto(cuenta);
     }
 
