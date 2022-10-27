@@ -1,10 +1,12 @@
 package co.com.prueba.peigo.service.dto;
 
 import co.com.prueba.peigo.domain.User;
+import lombok.Data;
 
 /**
  * A DTO representing a user, with only the public attributes.
  */
+@Data
 public class UserDTO {
 
     private Long id;
@@ -21,28 +23,5 @@ public class UserDTO {
         this.login = user.getLogin();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-            "id='" + id + '\'' +
-            ", login='" + login + '\'' +
-            "}";
-    }
+   
 }
