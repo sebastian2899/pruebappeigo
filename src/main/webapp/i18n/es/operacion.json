@@ -4,7 +4,7 @@
       "home": {
         "title": "Operacions",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Operacion",
+        "createLabel": "Realizar operación",
         "createOrEditLabel": "Crear o editar Operacion",
         "notFound": "Ningún Operacions encontrado"
       },

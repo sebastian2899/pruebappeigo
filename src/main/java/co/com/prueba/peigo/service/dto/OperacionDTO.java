@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * A DTO for the {@link co.com.prueba.peigo.domain.Operacion} entity.
  */
-public class OperacionDTO implements Serializable {
+public class OperacionDTO extends AuditoriaDTO implements Serializable {
 
     private Long id;
 
@@ -18,8 +18,7 @@ public class OperacionDTO implements Serializable {
 
     private Long cuentaDestino;
 
-    private AuditoriaDTO auditoria;
-
+   
     public Long getId() {
         return id;
     }
@@ -60,13 +59,6 @@ public class OperacionDTO implements Serializable {
         this.cuentaDestino = cuentaDestino;
     }
 
-    public AuditoriaDTO getAuditoria() {
-        return auditoria;
-    }
-
-    public void setAuditoria(AuditoriaDTO auditoria) {
-        this.auditoria = auditoria;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -98,7 +90,6 @@ public class OperacionDTO implements Serializable {
             ", monto=" + getMonto() +
             ", cuentaOrigen=" + getCuentaOrigen() +
             ", cuentaDestino=" + getCuentaDestino() +
-            ", auditoria=" + getAuditoria() +
             "}";
     }
 }

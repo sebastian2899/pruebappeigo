@@ -1,10 +1,21 @@
 package co.com.prueba.peigo.domain;
 
-import co.com.prueba.peigo.domain.enumeration.TipoCuenta;
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import co.com.prueba.peigo.domain.enumeration.TipoCuenta;
 
 /**
  * A Cuenta.
@@ -12,7 +23,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "cuenta")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Cuenta implements Serializable {
+public class Cuenta extends Auditoria implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -32,9 +43,6 @@ public class Cuenta implements Serializable {
     @Column(name = "tipo_cuenta")
     private TipoCuenta tipoCuenta;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Auditoria auditoria;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -90,18 +98,6 @@ public class Cuenta implements Serializable {
         this.tipoCuenta = tipoCuenta;
     }
 
-    public Auditoria getAuditoria() {
-        return this.auditoria;
-    }
-
-    public void setAuditoria(Auditoria auditoria) {
-        this.auditoria = auditoria;
-    }
-
-    public Cuenta auditoria(Auditoria auditoria) {
-        this.setAuditoria(auditoria);
-        return this;
-    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

@@ -4,7 +4,7 @@
       "home": {
         "title": "Cuentas",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Cuenta",
+        "createLabel": "Crear cuenta",
         "createOrEditLabel": "Crear o editar Cuenta",
         "notFound": "Ningún Cuentas encontrado"
       },

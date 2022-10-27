@@ -1,13 +1,14 @@
 package co.com.prueba.peigo.service.dto;
 
-import co.com.prueba.peigo.domain.enumeration.TipoCuenta;
 import java.io.Serializable;
 import java.util.Objects;
+
+import co.com.prueba.peigo.domain.enumeration.TipoCuenta;
 
 /**
  * A DTO for the {@link co.com.prueba.peigo.domain.Cuenta} entity.
  */
-public class CuentaDTO implements Serializable {
+public class CuentaDTO extends AuditoriaDTO implements Serializable {
 
     private Long id;
 
@@ -17,7 +18,6 @@ public class CuentaDTO implements Serializable {
 
     private TipoCuenta tipoCuenta;
 
-    private AuditoriaDTO auditoria;
 
     public Long getId() {
         return id;
@@ -51,14 +51,6 @@ public class CuentaDTO implements Serializable {
         this.tipoCuenta = tipoCuenta;
     }
 
-    public AuditoriaDTO getAuditoria() {
-        return auditoria;
-    }
-
-    public void setAuditoria(AuditoriaDTO auditoria) {
-        this.auditoria = auditoria;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -88,7 +80,6 @@ public class CuentaDTO implements Serializable {
             ", numeroCuenta='" + getNumeroCuenta() + "'" +
             ", saldo=" + getSaldo() +
             ", tipoCuenta='" + getTipoCuenta() + "'" +
-            ", auditoria=" + getAuditoria() +
             "}";
     }
 }

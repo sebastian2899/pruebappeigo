@@ -1,7 +1,15 @@
 package co.com.prueba.peigo.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -11,7 +19,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "operacion")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Operacion implements Serializable {
+public class Operacion extends Auditoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,9 +41,6 @@ public class Operacion implements Serializable {
     @Column(name = "cuenta_destino")
     private Long cuentaDestino;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Auditoria auditoria;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -104,19 +109,7 @@ public class Operacion implements Serializable {
         this.cuentaDestino = cuentaDestino;
     }
 
-    public Auditoria getAuditoria() {
-        return this.auditoria;
-    }
-
-    public void setAuditoria(Auditoria auditoria) {
-        this.auditoria = auditoria;
-    }
-
-    public Operacion auditoria(Auditoria auditoria) {
-        this.setAuditoria(auditoria);
-        return this;
-    }
-
+   
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
