@@ -2,18 +2,21 @@ package co.com.prueba.peigo.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import co.com.prueba.peigo.IntegrationTest;
-import co.com.prueba.peigo.domain.Operacion;
-import co.com.prueba.peigo.repository.OperacionRepository;
-import co.com.prueba.peigo.service.dto.OperacionDTO;
-import co.com.prueba.peigo.service.mapper.OperacionMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+
 import javax.persistence.EntityManager;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import co.com.prueba.peigo.IntegrationTest;
+import co.com.prueba.peigo.domain.Operacion;
+import co.com.prueba.peigo.repository.OperacionRepository;
+import co.com.prueba.peigo.service.dto.OperacionDTO;
+import co.com.prueba.peigo.service.mapper.OperacionMapper;
 
 /**
  * Integration tests for the {@link OperacionResource} REST controller.
@@ -70,11 +79,11 @@ class OperacionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Operacion createEntity(EntityManager em) {
-        Operacion operacion = new Operacion()
-            .numeroOperacion(DEFAULT_NUMERO_OPERACION)
-            .monto(DEFAULT_MONTO)
-            .cuentaOrigen(DEFAULT_CUENTA_ORIGEN)
-            .cuentaDestino(DEFAULT_CUENTA_DESTINO);
+        Operacion operacion = new Operacion();
+        operacion.setNumeroOperacion(DEFAULT_NUMERO_OPERACION);
+        operacion.setMonto(DEFAULT_MONTO);
+        operacion.setCuentaOrigen(DEFAULT_CUENTA_ORIGEN);
+        operacion.setCuentaDestino(DEFAULT_CUENTA_DESTINO);
         return operacion;
     }
 
@@ -85,11 +94,11 @@ class OperacionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Operacion createUpdatedEntity(EntityManager em) {
-        Operacion operacion = new Operacion()
-            .numeroOperacion(UPDATED_NUMERO_OPERACION)
-            .monto(UPDATED_MONTO)
-            .cuentaOrigen(UPDATED_CUENTA_ORIGEN)
-            .cuentaDestino(UPDATED_CUENTA_DESTINO);
+        Operacion operacion = new Operacion();
+        		  operacion.setNumeroOperacion(DEFAULT_NUMERO_OPERACION);
+        operacion.setMonto(DEFAULT_MONTO);
+        operacion.setCuentaOrigen(DEFAULT_CUENTA_ORIGEN);
+        operacion.setCuentaDestino(DEFAULT_CUENTA_DESTINO);
         return operacion;
     }
 
@@ -192,11 +201,10 @@ class OperacionResourceIT {
         Operacion updatedOperacion = operacionRepository.findById(operacion.getId()).get();
         // Disconnect from session so that the updates on updatedOperacion are not directly saved in db
         em.detach(updatedOperacion);
-        updatedOperacion
-            .numeroOperacion(UPDATED_NUMERO_OPERACION)
-            .monto(UPDATED_MONTO)
-            .cuentaOrigen(UPDATED_CUENTA_ORIGEN)
-            .cuentaDestino(UPDATED_CUENTA_DESTINO);
+        updatedOperacion.setNumeroOperacion(DEFAULT_NUMERO_OPERACION);
+        updatedOperacion.setMonto(DEFAULT_MONTO);
+        updatedOperacion.setCuentaOrigen(DEFAULT_CUENTA_ORIGEN);
+        updatedOperacion.setCuentaDestino(DEFAULT_CUENTA_DESTINO);
         OperacionDTO operacionDTO = operacionMapper.toDto(updatedOperacion);
 
         restOperacionMockMvc
@@ -294,7 +302,7 @@ class OperacionResourceIT {
         Operacion partialUpdatedOperacion = new Operacion();
         partialUpdatedOperacion.setId(operacion.getId());
 
-        partialUpdatedOperacion.cuentaOrigen(UPDATED_CUENTA_ORIGEN);
+        partialUpdatedOperacion.setCuentaOrigen(UPDATED_CUENTA_ORIGEN);
 
         restOperacionMockMvc
             .perform(
@@ -326,11 +334,10 @@ class OperacionResourceIT {
         Operacion partialUpdatedOperacion = new Operacion();
         partialUpdatedOperacion.setId(operacion.getId());
 
-        partialUpdatedOperacion
-            .numeroOperacion(UPDATED_NUMERO_OPERACION)
-            .monto(UPDATED_MONTO)
-            .cuentaOrigen(UPDATED_CUENTA_ORIGEN)
-            .cuentaDestino(UPDATED_CUENTA_DESTINO);
+        partialUpdatedOperacion.setNumeroOperacion(DEFAULT_NUMERO_OPERACION);
+        partialUpdatedOperacion.setMonto(DEFAULT_MONTO);
+        partialUpdatedOperacion.setCuentaOrigen(DEFAULT_CUENTA_ORIGEN);
+        partialUpdatedOperacion.setCuentaDestino(DEFAULT_CUENTA_DESTINO);
 
         restOperacionMockMvc
             .perform(

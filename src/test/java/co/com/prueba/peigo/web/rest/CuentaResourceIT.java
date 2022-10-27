@@ -68,7 +68,10 @@ class CuentaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Cuenta createEntity(EntityManager em) {
-        Cuenta cuenta = new Cuenta().numeroCuenta(DEFAULT_NUMERO_CUENTA).saldo(DEFAULT_SALDO).tipoCuenta(DEFAULT_TIPO_CUENTA);
+        Cuenta cuenta = new Cuenta();
+        cuenta.setNumeroCuenta(DEFAULT_NUMERO_CUENTA);
+        cuenta.setSaldo(DEFAULT_SALDO);
+        cuenta.setTipoCuenta(DEFAULT_TIPO_CUENTA);
         return cuenta;
     }
 
@@ -79,7 +82,10 @@ class CuentaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Cuenta createUpdatedEntity(EntityManager em) {
-        Cuenta cuenta = new Cuenta().numeroCuenta(UPDATED_NUMERO_CUENTA).saldo(UPDATED_SALDO).tipoCuenta(UPDATED_TIPO_CUENTA);
+        Cuenta cuenta = new Cuenta();
+        cuenta.setNumeroCuenta(DEFAULT_NUMERO_CUENTA);
+        cuenta.setSaldo(DEFAULT_SALDO);
+        cuenta.setTipoCuenta(DEFAULT_TIPO_CUENTA);
         return cuenta;
     }
 
@@ -179,7 +185,9 @@ class CuentaResourceIT {
         Cuenta updatedCuenta = cuentaRepository.findById(cuenta.getId()).get();
         // Disconnect from session so that the updates on updatedCuenta are not directly saved in db
         em.detach(updatedCuenta);
-        updatedCuenta.numeroCuenta(UPDATED_NUMERO_CUENTA).saldo(UPDATED_SALDO).tipoCuenta(UPDATED_TIPO_CUENTA);
+        updatedCuenta.setNumeroCuenta(UPDATED_NUMERO_CUENTA);
+        updatedCuenta.setSaldo(UPDATED_SALDO);
+        updatedCuenta.setTipoCuenta(UPDATED_TIPO_CUENTA);
         CuentaDTO cuentaDTO = cuentaMapper.toDto(updatedCuenta);
 
         restCuentaMockMvc
@@ -276,8 +284,9 @@ class CuentaResourceIT {
         Cuenta partialUpdatedCuenta = new Cuenta();
         partialUpdatedCuenta.setId(cuenta.getId());
 
-        partialUpdatedCuenta.numeroCuenta(UPDATED_NUMERO_CUENTA).saldo(UPDATED_SALDO).tipoCuenta(UPDATED_TIPO_CUENTA);
-
+        partialUpdatedCuenta.setNumeroCuenta(UPDATED_NUMERO_CUENTA);
+        partialUpdatedCuenta.setSaldo(UPDATED_SALDO);
+        partialUpdatedCuenta.setTipoCuenta(UPDATED_TIPO_CUENTA);
         restCuentaMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCuenta.getId())
@@ -306,9 +315,9 @@ class CuentaResourceIT {
         // Update the cuenta using partial update
         Cuenta partialUpdatedCuenta = new Cuenta();
         partialUpdatedCuenta.setId(cuenta.getId());
-
-        partialUpdatedCuenta.numeroCuenta(UPDATED_NUMERO_CUENTA).saldo(UPDATED_SALDO).tipoCuenta(UPDATED_TIPO_CUENTA);
-
+        partialUpdatedCuenta.setNumeroCuenta(UPDATED_NUMERO_CUENTA);
+        partialUpdatedCuenta.setSaldo(UPDATED_SALDO);
+        partialUpdatedCuenta.setTipoCuenta(UPDATED_TIPO_CUENTA);
         restCuentaMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCuenta.getId())

@@ -54,7 +54,6 @@ public class CacheConfiguration {
             createCache(cm, co.com.prueba.peigo.domain.Authority.class.getName());
             createCache(cm, co.com.prueba.peigo.domain.User.class.getName() + ".authorities");
             createCache(cm, co.com.prueba.peigo.domain.Cuenta.class.getName());
-            createCache(cm, co.com.prueba.peigo.domain.Auditoria.class.getName());
             createCache(cm, co.com.prueba.peigo.domain.Operacion.class.getName());
             // jhipster-needle-ehcache-add-entry
         };

@@ -1,6 +1,7 @@
 package co.com.prueba.peigo.domain;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,14 +17,17 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import co.com.prueba.peigo.domain.enumeration.TipoCuenta;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  * A Cuenta.
  */
+@Data
 @Entity
 @Table(name = "cuenta")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Cuenta extends Auditoria implements Serializable{
+public class Cuenta implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -42,90 +46,18 @@ public class Cuenta extends Auditoria implements Serializable{
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_cuenta")
     private TipoCuenta tipoCuenta;
+    
+    @Column(name = "usuario_creacion")
+    private Long usuarioCreacion;
+
+    @Column(name = "fecha_creacion")
+    private Instant fechaCreacion;
+
+    @Column(name = "usuario_modificacion")
+    private Long usuarioModificacion;
+
+    @Column(name = "fecha_modificacion")
+    private Instant fechaModificacion;
 
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public Cuenta id(Long id) {
-        this.setId(id);
-        return this;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumeroCuenta() {
-        return this.numeroCuenta;
-    }
-
-    public Cuenta numeroCuenta(String numeroCuenta) {
-        this.setNumeroCuenta(numeroCuenta);
-        return this;
-    }
-
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
-
-    public Double getSaldo() {
-        return this.saldo;
-    }
-
-    public Cuenta saldo(Double saldo) {
-        this.setSaldo(saldo);
-        return this;
-    }
-
-    public void setSaldo(Double saldo) {
-        this.saldo = saldo;
-    }
-
-    public TipoCuenta getTipoCuenta() {
-        return this.tipoCuenta;
-    }
-
-    public Cuenta tipoCuenta(TipoCuenta tipoCuenta) {
-        this.setTipoCuenta(tipoCuenta);
-        return this;
-    }
-
-    public void setTipoCuenta(TipoCuenta tipoCuenta) {
-        this.tipoCuenta = tipoCuenta;
-    }
-
-
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Cuenta)) {
-            return false;
-        }
-        return id != null && id.equals(((Cuenta) o).id);
-    }
-
-    @Override
-    public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "Cuenta{" +
-            "id=" + getId() +
-            ", numeroCuenta='" + getNumeroCuenta() + "'" +
-            ", saldo=" + getSaldo() +
-            ", tipoCuenta='" + getTipoCuenta() + "'" +
-            "}";
-    }
 }
