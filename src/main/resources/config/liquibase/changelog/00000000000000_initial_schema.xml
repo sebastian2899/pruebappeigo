@@ -25,9 +25,13 @@
             <column name="password_hash" type="varchar(60)"/>
             <column name="first_name" type="varchar(50)"/>
             <column name="last_name" type="varchar(50)"/>
+            <column name="tipo_documento" type="varchar(50)"/>
+            <column name="numero_documento" type="varchar(50)"/>
             <column name="email" type="varchar(191)">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_user_email"/>
             </column>
+            <column name="telefono" type="varchar(50)"/>
+            <column name="direccion" type="varchar(50)"/>
             <column name="image_url" type="varchar(256)"/>
             <column name="activated" type="boolean" valueBoolean="false">
                 <constraints nullable="false" />
