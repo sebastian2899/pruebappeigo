@@ -23,11 +23,22 @@
             <column name="tipo_cuenta" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="auditoria_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_cuenta__auditoria_id" />
+            <column name="usuario_creacion" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="fecha_creacion" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="usuario_modificacion" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="fecha_modificacion" type="${datetimeType}">
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <dropDefaultValue tableName="cuenta" columnName="fecha_creacion" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="cuenta" columnName="fecha_modificacion" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
