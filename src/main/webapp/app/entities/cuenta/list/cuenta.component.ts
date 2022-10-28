@@ -6,6 +6,7 @@ import { ICuenta } from '../cuenta.model';
 import { CuentaService } from '../service/cuenta.service';
 import { CuentaDeleteDialogComponent } from '../delete/cuenta-delete-dialog.component';
 import { CargarCuentaDialogComponent } from '../cargo-cuenta/cargo-cuenta-dialog.component';
+import { MermarCuentaDialogComponent } from '../mermo-cuenta/mermo-cuenta-dialog.component';
 
 @Component({
   selector: 'jhi-cuenta',
@@ -76,7 +77,7 @@ export class CuentaComponent implements OnInit {
   }
 
   mermar(cuenta: ICuenta): void {
-    const modalRef = this.modalService.open(CargarCuentaDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(MermarCuentaDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.cuenta = cuenta;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
