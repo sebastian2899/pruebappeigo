@@ -14,13 +14,27 @@ import { CargarCuentaDialogComponent } from '../cargo-cuenta/cargo-cuenta-dialog
 export class CuentaComponent implements OnInit {
   cuentas?: ICuenta[];
   isLoading = false;
-
+  numCuenta = "";
   constructor(protected cuentaService: CuentaService, protected modalService: NgbModal) {}
 
   loadAll(): void {
     this.isLoading = true;
 
     this.cuentaService.query().subscribe({
+      next: (res: HttpResponse<ICuenta[]>) => {
+        this.isLoading = false;
+        this.cuentas = res.body ?? [];
+      },
+      error: () => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  loadFiltros(): void {
+    this.isLoading = true;
+
+    this.cuentaService.queryNumero(this.numCuenta).subscribe({
       next: (res: HttpResponse<ICuenta[]>) => {
         this.isLoading = false;
         this.cuentas = res.body ?? [];

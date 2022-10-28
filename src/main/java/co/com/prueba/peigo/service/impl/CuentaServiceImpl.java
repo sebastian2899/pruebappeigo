@@ -129,4 +129,9 @@ public class CuentaServiceImpl implements CuentaService {
         log.debug("Request to delete Cuenta : {}", id);
         cuentaRepository.deleteById(id);
     }
+
+	@Override
+	public List<CuentaDTO> consultarCuentasNumero(String numero) {
+		  return cuentaRepository.findByNumeroLike("%" +numero.toUpperCase() + "%" ).stream().map(cuentaMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+	}
 }

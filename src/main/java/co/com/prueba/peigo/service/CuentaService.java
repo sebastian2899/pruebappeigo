@@ -58,4 +58,6 @@ public interface CuentaService {
     Optional<CuentaDTO> findByNumber(String numeroCuenta);
 
 	CuentaDTO cargarCuenta(CuentaDTO cuentaDTO, String operacion);
+
+	List<CuentaDTO> consultarCuentasNumero(String numero);
 }

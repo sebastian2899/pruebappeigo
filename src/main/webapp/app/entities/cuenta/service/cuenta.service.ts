@@ -18,6 +18,9 @@ export class CuentaService {
   protected resourceCargarCuentaUrl = this.applicationConfigService.getEndpointFor('api/cargarCuenta');
   protected resourceMermarCuentaUrl = this.applicationConfigService.getEndpointFor('api/mermarCuenta');
 
+  protected resourceconsultarCuentasNumeroUrl = this.applicationConfigService.getEndpointFor('api/consultarCuentasNumero');
+
+
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(cuenta: ICuenta): Observable<EntityResponseType> {
@@ -48,6 +51,12 @@ export class CuentaService {
     const options = createRequestOption(req);
     return this.http
       .get<ICuenta[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryNumero(numero: string): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<ICuenta[]>(`${this.resourceconsultarCuentasNumeroUrl}/${numero}`, { observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 

@@ -46,11 +46,11 @@ class OperacionResourceIT {
     private static final Double DEFAULT_MONTO = 1D;
     private static final Double UPDATED_MONTO = 2D;
 
-    private static final Long DEFAULT_CUENTA_ORIGEN = 1L;
-    private static final Long UPDATED_CUENTA_ORIGEN = 2L;
+    private static final String DEFAULT_CUENTA_ORIGEN = "123456";
+    private static final String UPDATED_CUENTA_ORIGEN = "1234567";
 
-    private static final Long DEFAULT_CUENTA_DESTINO = 1L;
-    private static final Long UPDATED_CUENTA_DESTINO = 2L;
+    private static final String DEFAULT_CUENTA_DESTINO = "1234";
+    private static final String UPDATED_CUENTA_DESTINO = "123";
 
     private static final String ENTITY_API_URL = "/api/operacions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -160,8 +160,8 @@ class OperacionResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(operacion.getId().intValue())))
             .andExpect(jsonPath("$.[*].numeroOperacion").value(hasItem(DEFAULT_NUMERO_OPERACION)))
             .andExpect(jsonPath("$.[*].monto").value(hasItem(DEFAULT_MONTO.doubleValue())))
-            .andExpect(jsonPath("$.[*].cuentaOrigen").value(hasItem(DEFAULT_CUENTA_ORIGEN.intValue())))
-            .andExpect(jsonPath("$.[*].cuentaDestino").value(hasItem(DEFAULT_CUENTA_DESTINO.intValue())));
+            .andExpect(jsonPath("$.[*].cuentaOrigen").value(hasItem(DEFAULT_CUENTA_ORIGEN)))
+            .andExpect(jsonPath("$.[*].cuentaDestino").value(hasItem(DEFAULT_CUENTA_DESTINO)));
     }
 
     @Test
@@ -178,8 +178,8 @@ class OperacionResourceIT {
             .andExpect(jsonPath("$.id").value(operacion.getId().intValue()))
             .andExpect(jsonPath("$.numeroOperacion").value(DEFAULT_NUMERO_OPERACION))
             .andExpect(jsonPath("$.monto").value(DEFAULT_MONTO.doubleValue()))
-            .andExpect(jsonPath("$.cuentaOrigen").value(DEFAULT_CUENTA_ORIGEN.intValue()))
-            .andExpect(jsonPath("$.cuentaDestino").value(DEFAULT_CUENTA_DESTINO.intValue()));
+            .andExpect(jsonPath("$.cuentaOrigen").value(DEFAULT_CUENTA_ORIGEN))
+            .andExpect(jsonPath("$.cuentaDestino").value(DEFAULT_CUENTA_DESTINO));
     }
 
     @Test

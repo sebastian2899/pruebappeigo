@@ -67,10 +67,7 @@ public class CuentaResource {
 
     @PostMapping("/cargarCuenta")
     public ResponseEntity<CuentaDTO> cargarCuenta(@RequestBody CuentaDTO cuentaDTO) throws URISyntaxException {
-        log.debug("REST request to save Cuenta : {}", cuentaDTO);
-        if (cuentaDTO.getId() != null) {
-            throw new BadRequestAlertException("A new cuenta cannot already have an ID", ENTITY_NAME, "idexists");
-        }
+        log.debug("REST request to save cargarCuenta : {}", cuentaDTO);
         CuentaDTO result = cuentaService.cargarCuenta(cuentaDTO , "cargar");
         return ResponseEntity
             .created(new URI("/api/cuentas/" + result.getId()))
@@ -80,10 +77,7 @@ public class CuentaResource {
     
     @PostMapping("/mermarCuenta")
     public ResponseEntity<CuentaDTO> mermarCuenta(@RequestBody CuentaDTO cuentaDTO) throws URISyntaxException {
-        log.debug("REST request to save Cuenta : {}", cuentaDTO);
-        if (cuentaDTO.getId() != null) {
-            throw new BadRequestAlertException("A new cuenta cannot already have an ID", ENTITY_NAME, "idexists");
-        }
+        log.debug("REST request to save mermarCuenta : {}", cuentaDTO);
         CuentaDTO result = cuentaService.cargarCuenta(cuentaDTO, "mermar");
         return ResponseEntity
             .created(new URI("/api/cuentas/" + result.getId()))
@@ -170,6 +164,12 @@ public class CuentaResource {
     public List<CuentaDTO> getAllCuentas() {
         log.debug("REST request to get all Cuentas");
         return cuentaService.findAll();
+    }
+    
+    @GetMapping("/consultarCuentasNumero/{numero}")
+    public List<CuentaDTO> consultarCuentasNumero(@PathVariable String numero) {
+        log.debug("REST request to get all Cuentas");
+        return cuentaService.consultarCuentasNumero(numero);
     }
 
     /**

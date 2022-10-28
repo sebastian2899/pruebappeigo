@@ -1,5 +1,6 @@
 package co.com.prueba.peigo.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,6 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
 	@Query("SELECT c From Cuenta c Where c.numeroCuenta=:numeroCuenta")
 	Optional<Cuenta> findByNumber(@Param("numeroCuenta") String numeroCuenta);
+	@Query("SELECT c From Cuenta c Where UPPER(c.numeroCuenta) LIKE :numeroCuenta")
+	List<Cuenta> findByNumeroLike(@Param("numeroCuenta") String numeroCuenta);
 	}
