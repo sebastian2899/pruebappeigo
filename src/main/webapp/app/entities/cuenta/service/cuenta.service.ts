@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { ICuenta, getCuentaIdentifier } from '../cuenta.model';
+import { ICuenta, getCuentaIdentifier, Cuenta } from '../cuenta.model';
 import { map } from 'rxjs/operators';
 import dayjs from 'dayjs/esm';
 
@@ -15,6 +15,8 @@ export type EntityArrayResponseType = HttpResponse<ICuenta[]>;
 @Injectable({ providedIn: 'root' })
 export class CuentaService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/cuentas');
+  protected resourceCargarCuentaUrl = this.applicationConfigService.getEndpointFor('api/cargarCuenta');
+  protected resourceMermarCuentaUrl = this.applicationConfigService.getEndpointFor('api/mermarCuenta');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -51,6 +53,22 @@ export class CuentaService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  cargarCuenta(id: number, valor: number, login: string): Observable<HttpResponse<{}>> {
+    const cuenta = new Cuenta();
+    cuenta.id = id;
+    cuenta.saldo = valor;
+    cuenta.usuarioModificacion = login;
+    return this.http.post<ICuenta>(this.resourceCargarCuentaUrl, cuenta, { observe: 'response' });
+  }
+
+  mermarCuenta(id: number, valor: number, login: string): Observable<HttpResponse<{}>> {
+    const cuenta = new Cuenta();
+    cuenta.id = id;
+    cuenta.saldo = valor;
+    cuenta.usuarioModificacion = login;
+    return this.http.post<ICuenta>(this.resourceMermarCuentaUrl, cuenta, { observe: 'response' });
   }
 
   addCuentaToCollectionIfMissing(cuentaCollection: ICuenta[], ...cuentasToCheck: (ICuenta | null | undefined)[]): ICuenta[] {

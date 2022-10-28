@@ -65,6 +65,32 @@ public class CuentaResource {
             .body(result);
     }
 
+    @PostMapping("/cargarCuenta")
+    public ResponseEntity<CuentaDTO> cargarCuenta(@RequestBody CuentaDTO cuentaDTO) throws URISyntaxException {
+        log.debug("REST request to save Cuenta : {}", cuentaDTO);
+        if (cuentaDTO.getId() != null) {
+            throw new BadRequestAlertException("A new cuenta cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        CuentaDTO result = cuentaService.cargarCuenta(cuentaDTO , "cargar");
+        return ResponseEntity
+            .created(new URI("/api/cuentas/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+    
+    @PostMapping("/mermarCuenta")
+    public ResponseEntity<CuentaDTO> mermarCuenta(@RequestBody CuentaDTO cuentaDTO) throws URISyntaxException {
+        log.debug("REST request to save Cuenta : {}", cuentaDTO);
+        if (cuentaDTO.getId() != null) {
+            throw new BadRequestAlertException("A new cuenta cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        CuentaDTO result = cuentaService.cargarCuenta(cuentaDTO, "mermar");
+        return ResponseEntity
+            .created(new URI("/api/cuentas/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
     /**
      * {@code PUT  /cuentas/:id} : Updates an existing cuenta.
      *

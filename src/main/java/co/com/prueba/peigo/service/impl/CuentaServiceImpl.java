@@ -55,6 +55,19 @@ public class CuentaServiceImpl implements CuentaService {
         return cuentaMapper.toDto(cuenta);
     }
 
+    @Override
+    public CuentaDTO cargarCuenta(CuentaDTO cuentaDTO, String operacion) {
+        log.debug("Request to cargarCuenta Cuenta : {}", cuentaDTO);
+        Optional<Cuenta> cuenta = cuentaRepository.findById(cuentaDTO.getId());
+        cuenta.get().setUsuarioModificacion(cuentaDTO.getUsuarioModificacion());
+        if(operacion.equals("cargar")) {
+        cuenta.get().setSaldo(cuenta.get().getSaldo()+cuentaDTO.getSaldo());
+        }
+        else {
+        	cuenta.get().setSaldo(cuenta.get().getSaldo()-cuentaDTO.getSaldo());
+        }
+        return update(cuentaMapper.toDto(cuenta.get()));
+    }
     private TrazabilidadDTO crearRegistroAuditoria(CuentaDTO cuentaDTO, Cuenta cuenta) {
     	TrazabilidadDTO dto = new TrazabilidadDTO();
     	//dto.setRequest(gson.toJson(cuentaDTO));

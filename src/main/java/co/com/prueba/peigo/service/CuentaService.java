@@ -56,4 +56,6 @@ public interface CuentaService {
     void delete(Long id);
     
     Optional<CuentaDTO> findByNumber(String numeroCuenta);
+
+	CuentaDTO cargarCuenta(CuentaDTO cuentaDTO, String operacion);
 }

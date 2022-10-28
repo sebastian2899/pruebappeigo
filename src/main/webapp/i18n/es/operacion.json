@@ -8,8 +8,8 @@
         "createOrEditLabel": "Crear o editar Operacion",
         "notFound": "Ningún Operacions encontrado"
       },
-      "created": "Un nuevo Operacion ha sido creado con el identificador {{ param }}",
-      "updated": "Un Operacion ha sido actualizado con el identificador {{ param }}",
+      "created": "{{ param }}",
+      "updated": "{{ param }}",
       "deleted": "Un Operacion ha sido eliminado con el identificador {{ param }}",
       "delete": {
         "question": "¿Seguro que quiere eliminar Operacion {{ id }}?"
