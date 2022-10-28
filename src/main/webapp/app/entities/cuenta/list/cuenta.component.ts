@@ -7,7 +7,9 @@ import { CuentaService } from '../service/cuenta.service';
 import { CuentaDeleteDialogComponent } from '../delete/cuenta-delete-dialog.component';
 import { CargarCuentaDialogComponent } from '../cargo-cuenta/cargo-cuenta-dialog.component';
 import { MermarCuentaDialogComponent } from '../mermo-cuenta/mermo-cuenta-dialog.component';
-
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/auth/account.model';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'jhi-cuenta',
   templateUrl: './cuenta.component.html',
@@ -16,7 +18,11 @@ export class CuentaComponent implements OnInit {
   cuentas?: ICuenta[];
   isLoading = false;
   numCuenta = "";
-  constructor(protected cuentaService: CuentaService, protected modalService: NgbModal) {}
+  account: Account | null = null;
+  private readonly destroy$ = new Subject<void>();
+
+  constructor(protected cuentaService: CuentaService, protected modalService: NgbModal,
+    private accountService: AccountService) {}
 
   loadAll(): void {
     this.isLoading = true;
@@ -35,7 +41,7 @@ export class CuentaComponent implements OnInit {
   loadFiltros(): void {
     this.isLoading = true;
 
-    this.cuentaService.queryNumero(this.numCuenta).subscribe({
+    this.cuentaService.queryNumero(this.numCuenta, this.account!.login).subscribe({
       next: (res: HttpResponse<ICuenta[]>) => {
         this.isLoading = false;
         this.cuentas = res.body ?? [];
@@ -47,7 +53,11 @@ export class CuentaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAll();
+      this.accountService
+      .getAuthenticationState()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(account => (this.account = account));
+    this.loadFiltros();
   }
 
   trackId(_index: number, item: ICuenta): number {

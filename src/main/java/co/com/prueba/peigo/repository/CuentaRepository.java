@@ -19,6 +19,10 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
 	@Query("SELECT c From Cuenta c Where c.numeroCuenta=:numeroCuenta")
 	Optional<Cuenta> findByNumber(@Param("numeroCuenta") String numeroCuenta);
-	@Query("SELECT c From Cuenta c Where UPPER(c.numeroCuenta) LIKE :numeroCuenta")
-	List<Cuenta> findByNumeroLike(@Param("numeroCuenta") String numeroCuenta);
+	
+	@Query("SELECT c From Cuenta c Where UPPER(c.numeroCuenta) LIKE :numeroCuenta AND c.usuarioCreacion =:usuario")
+	List<Cuenta> findByNumeroLike(@Param("numeroCuenta") String numeroCuenta, @Param("usuario") String usuario);
+	
+	@Query("SELECT c From Cuenta c Where c.usuarioCreacion =:usuario")
+	List<Cuenta> findByUsuario(@Param("usuario") String usuario);
 	}

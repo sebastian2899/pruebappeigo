@@ -59,5 +59,5 @@ public interface CuentaService {
 
 	CuentaDTO cargarCuenta(CuentaDTO cuentaDTO, String operacion);
 
-	List<CuentaDTO> consultarCuentasNumero(String numero);
+	List<CuentaDTO> consultarCuentasNumero(String numero, String usuario);
 }

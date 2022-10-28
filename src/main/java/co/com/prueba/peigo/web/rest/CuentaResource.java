@@ -166,10 +166,10 @@ public class CuentaResource {
         return cuentaService.findAll();
     }
     
-    @GetMapping("/consultarCuentasNumero/{numero}")
-    public List<CuentaDTO> consultarCuentasNumero(@PathVariable String numero) {
+    @GetMapping("/consultarCuentasNumero/{numero}/{usuario}")
+    public List<CuentaDTO> consultarCuentasNumero(@PathVariable String numero, @PathVariable String usuario) {
         log.debug("REST request to get all Cuentas");
-        return cuentaService.consultarCuentasNumero(numero);
+        return cuentaService.consultarCuentasNumero(numero, usuario);
     }
 
     /**

@@ -131,7 +131,12 @@ public class CuentaServiceImpl implements CuentaService {
     }
 
 	@Override
-	public List<CuentaDTO> consultarCuentasNumero(String numero) {
-		  return cuentaRepository.findByNumeroLike("%" +numero.toUpperCase() + "%" ).stream().map(cuentaMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
-	}
+	public List<CuentaDTO> consultarCuentasNumero(String numero, String usuario) {
+		if(numero.isEmpty() || numero.equals("TODAS")) {
+			return cuentaRepository.findByUsuario(usuario ).stream().map(cuentaMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+		}
+		else {
+		  return cuentaRepository.findByNumeroLike("%" +numero.toUpperCase() + "%", usuario ).stream().map(cuentaMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+		}
+		}
 }

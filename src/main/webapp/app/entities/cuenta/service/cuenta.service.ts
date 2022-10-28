@@ -54,9 +54,12 @@ export class CuentaService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  queryNumero(numero: string): Observable<EntityArrayResponseType> {
+  queryNumero(numero: string, usuario: string): Observable<EntityArrayResponseType> {
+    if(!numero){
+      numero = "TODAS";
+    }
     return this.http
-      .get<ICuenta[]>(`${this.resourceconsultarCuentasNumeroUrl}/${numero}`, { observe: 'response' })
+      .get<ICuenta[]>(`${this.resourceconsultarCuentasNumeroUrl}/${numero}/${usuario}`, { observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
