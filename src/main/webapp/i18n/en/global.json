@@ -10,7 +10,7 @@
         "persona": "Persona",
         "cuenta": "Cuenta",
         "auditoria": "Auditoria",
-        "operacion": "Operacion",
+        "operacion": "Operación",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

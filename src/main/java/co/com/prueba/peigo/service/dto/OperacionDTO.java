@@ -21,11 +21,11 @@ public class OperacionDTO implements Serializable {
 
     private Long cuentaDestino;
     
-    private Long usuarioCreacion;
+    private String usuarioCreacion;
 
     private Instant fechaCreacion;
 
-    private Long usuarioModificacion;
+    private String usuarioModificacion;
 
     private Instant fechaModificacion;
    

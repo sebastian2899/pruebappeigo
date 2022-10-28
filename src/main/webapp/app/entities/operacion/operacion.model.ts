@@ -1,4 +1,4 @@
-import { IAuditoria } from 'app/entities/auditoria/auditoria.model';
+import dayjs from 'dayjs/esm';
 
 export interface IOperacion {
   id?: number;
@@ -6,7 +6,10 @@ export interface IOperacion {
   monto?: number | null;
   cuentaOrigen?: number | null;
   cuentaDestino?: number | null;
-  auditoria?: IAuditoria | null;
+  usuarioCreacion?: string | null;
+  fechaCreacion?: dayjs.Dayjs | null;
+  usuarioModificacion?: string | null;
+  fechaModificacion?: dayjs.Dayjs | null;
 }
 
 export class Operacion implements IOperacion {
@@ -16,7 +19,10 @@ export class Operacion implements IOperacion {
     public monto?: number | null,
     public cuentaOrigen?: number | null,
     public cuentaDestino?: number | null,
-    public auditoria?: IAuditoria | null
+    public usuarioCreacion?: string | null,
+    public fechaCreacion?: dayjs.Dayjs | null,
+    public usuarioModificacion?: string | null,
+    public fechaModificacion?: dayjs.Dayjs | null,
   ) {}
 }
 

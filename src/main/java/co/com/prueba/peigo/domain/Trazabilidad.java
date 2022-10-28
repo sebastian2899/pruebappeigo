@@ -43,7 +43,7 @@ public class Trazabilidad implements Serializable {
     private String proceso;
     
     @Column(name = "usuario_creacion")
-    private Long usuarioCreacion;
+    private String usuarioCreacion;
 
     @Column(name = "fecha_creacion")
     private Instant fechaCreacion;

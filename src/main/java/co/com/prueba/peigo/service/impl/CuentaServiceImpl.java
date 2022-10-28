@@ -57,8 +57,8 @@ public class CuentaServiceImpl implements CuentaService {
 
     private TrazabilidadDTO crearRegistroAuditoria(CuentaDTO cuentaDTO, Cuenta cuenta) {
     	TrazabilidadDTO dto = new TrazabilidadDTO();
-    	dto.setRequest(gson.toJson(cuentaDTO));
-    	dto.setResponse(gson.toJson(cuenta));
+    	//dto.setRequest(gson.toJson(cuentaDTO));
+    	//dto.setResponse(gson.toJson(cuenta));
     	dto.setProceso(cuentaDTO.getId() != null ? "ACTUALIZACION CUENTA" : "CREACION CUENTA");
     	dto.setUsuarioCreacion(cuentaDTO.getId() != null ? cuentaDTO.getUsuarioModificacion() : cuentaDTO.getUsuarioModificacion());
 		return dto;

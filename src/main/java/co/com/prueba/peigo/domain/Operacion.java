@@ -46,13 +46,13 @@ public class Operacion implements Serializable {
     private Long cuentaDestino;
     
     @Column(name = "usuario_creacion")
-    private Long usuarioCreacion;
+    private String usuarioCreacion;
 
     @Column(name = "fecha_creacion")
     private Instant fechaCreacion;
 
     @Column(name = "usuario_modificacion")
-    private Long usuarioModificacion;
+    private String usuarioModificacion;
 
     @Column(name = "fecha_modificacion")
     private Instant fechaModificacion;

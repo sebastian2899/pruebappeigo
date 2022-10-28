@@ -2,20 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-
 import { ICuenta, Cuenta } from '../cuenta.model';
 import { CuentaService } from '../service/cuenta.service';
 import { IAuditoria } from 'app/entities/auditoria/auditoria.model';
 import { AuditoriaService } from 'app/entities/auditoria/service/auditoria.service';
 import { TipoCuenta } from 'app/entities/enumerations/tipo-cuenta.model';
+import { takeUntil } from 'rxjs/operators';
+
+import dayjs from 'dayjs/esm';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
+
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/auth/account.model';
 
 @Component({
   selector: 'jhi-cuenta-update',
   templateUrl: './cuenta-update.component.html',
 })
 export class CuentaUpdateComponent implements OnInit {
+
+  account: Account | null = null;
+
+
   isSaving = false;
   tipoCuentaValues = Object.keys(TipoCuenta);
 
@@ -26,17 +36,28 @@ export class CuentaUpdateComponent implements OnInit {
     numeroCuenta: [],
     saldo: [],
     tipoCuenta: [],
-    auditoria: [],
+    usuarioCreacion: [],
+    fechaCreacion: [],
+    usuarioModificacion: [],
+    fechaModificacion: [],
   });
 
+  private readonly destroy$ = new Subject<void>();
+  
   constructor(
     protected cuentaService: CuentaService,
     protected auditoriaService: AuditoriaService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
+    this.accountService
+    .getAuthenticationState()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(account => (this.account = account));
+
     this.activatedRoute.data.subscribe(({ cuenta }) => {
       this.updateForm(cuenta);
 
@@ -52,8 +73,10 @@ export class CuentaUpdateComponent implements OnInit {
     this.isSaving = true;
     const cuenta = this.createFromForm();
     if (cuenta.id !== undefined) {
+      cuenta.usuarioModificacion = this.account?.login;
       this.subscribeToSaveResponse(this.cuentaService.update(cuenta));
     } else {
+      cuenta.usuarioCreacion = this.account?.login;
       this.subscribeToSaveResponse(this.cuentaService.create(cuenta));
     }
   }
@@ -87,10 +110,11 @@ export class CuentaUpdateComponent implements OnInit {
       numeroCuenta: cuenta.numeroCuenta,
       saldo: cuenta.saldo,
       tipoCuenta: cuenta.tipoCuenta,
-      auditoria: cuenta.auditoria,
+      usuarioCreacion: cuenta.usuarioCreacion,
+      fechaCreacion: cuenta.fechaCreacion ? cuenta.fechaCreacion.format(DATE_TIME_FORMAT) : null,
+      usuarioModificacion: cuenta.usuarioModificacion,
+      fechaModificacion: cuenta.fechaModificacion ? cuenta.fechaModificacion.format(DATE_TIME_FORMAT) : null
     });
-
-    this.auditoriasCollection = this.auditoriaService.addAuditoriaToCollectionIfMissing(this.auditoriasCollection, cuenta.auditoria);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -112,7 +136,14 @@ export class CuentaUpdateComponent implements OnInit {
       numeroCuenta: this.editForm.get(['numeroCuenta'])!.value,
       saldo: this.editForm.get(['saldo'])!.value,
       tipoCuenta: this.editForm.get(['tipoCuenta'])!.value,
-      auditoria: this.editForm.get(['auditoria'])!.value,
+      usuarioCreacion: this.editForm.get(['usuarioCreacion'])!.value,
+      fechaCreacion: this.editForm.get(['fechaCreacion'])!.value
+        ? dayjs(this.editForm.get(['fechaCreacion'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      usuarioModificacion: this.editForm.get(['usuarioModificacion'])!.value,
+      fechaModificacion: this.editForm.get(['fechaModificacion'])!.value
+        ? dayjs(this.editForm.get(['fechaModificacion'])!.value, DATE_TIME_FORMAT)
+        : undefined,
     };
   }
 }

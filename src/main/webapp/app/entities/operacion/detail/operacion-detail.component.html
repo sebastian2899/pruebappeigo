@@ -30,12 +30,7 @@
         <dd>
           <span>{{ operacion.cuentaDestino }}</span>
         </dd>
-        <dt><span jhiTranslate="pruebapeigoApp.operacion.auditoria">Auditoria</span></dt>
-        <dd>
-          <div *ngIf="operacion.auditoria">
-            <a [routerLink]="['/auditoria', operacion.auditoria?.id, 'view']">{{ operacion.auditoria?.id }}</a>
-          </div>
-        </dd>
+        
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

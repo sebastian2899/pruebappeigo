@@ -2,7 +2,7 @@
   "pruebapeigoApp": {
     "operacion": {
       "home": {
-        "title": "Operacions",
+        "title": "Operaciones",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Realizar operación",
         "createOrEditLabel": "Crear o editar Operacion",
@@ -15,7 +15,7 @@
         "question": "¿Seguro que quiere eliminar Operacion {{ id }}?"
       },
       "detail": {
-        "title": "Operacion"
+        "title": "Operación"
       },
       "id": "ID",
       "numeroOperacion": "Numero Operacion",

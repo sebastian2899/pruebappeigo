@@ -26,12 +26,7 @@
         <dd>
           <span jhiTranslate="{{ 'pruebapeigoApp.TipoCuenta.' + cuenta.tipoCuenta }}">{{ cuenta.tipoCuenta }}</span>
         </dd>
-        <dt><span jhiTranslate="pruebapeigoApp.cuenta.auditoria">Auditoria</span></dt>
-        <dd>
-          <div *ngIf="cuenta.auditoria">
-            <a [routerLink]="['/auditoria', cuenta.auditoria?.id, 'view']">{{ cuenta.auditoria?.id }}</a>
-          </div>
-        </dd>
+       
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

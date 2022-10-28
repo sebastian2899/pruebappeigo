@@ -45,9 +45,9 @@ public class OperacionServiceImpl implements OperacionService {
     }
     
     private TrazabilidadDTO crearRegistroAuditoria(OperacionDTO cuentaDTO, Operacion cuenta) {
-    	TrazabilidadDTO dto = new TrazabilidadDTO();
-    	dto.setRequest(gson.toJson(cuentaDTO));
-    	dto.setResponse(gson.toJson(cuenta));
+    	TrazabilidadDTO dto = new TrazabilidadDTO();;
+    	//dto.setRequest(gson.toJson(cuentaDTO));
+    	//dto.setResponse(gson.toJson(cuenta));
     	dto.setProceso(cuentaDTO.getId() != null ? "ACTUALIZACION OPERACION" : "CREACION OPERACION");
     	dto.setUsuarioCreacion(cuentaDTO.getId() != null ? cuentaDTO.getUsuarioModificacion() : cuentaDTO.getUsuarioModificacion());
 		return dto;

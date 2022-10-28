@@ -17,7 +17,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import co.com.prueba.peigo.domain.enumeration.TipoCuenta;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -48,13 +47,13 @@ public class Cuenta implements Serializable{
     private TipoCuenta tipoCuenta;
     
     @Column(name = "usuario_creacion")
-    private Long usuarioCreacion;
+    private String usuarioCreacion;
 
     @Column(name = "fecha_creacion")
     private Instant fechaCreacion;
 
     @Column(name = "usuario_modificacion")
-    private Long usuarioModificacion;
+    private String usuarioModificacion;
 
     @Column(name = "fecha_modificacion")
     private Instant fechaModificacion;

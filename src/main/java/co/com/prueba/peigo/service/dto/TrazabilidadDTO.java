@@ -21,7 +21,7 @@ public class TrazabilidadDTO implements Serializable {
 
     private String proceso;
     
-    private Long usuarioCreacion;
+    private String usuarioCreacion;
 
     private Instant fechaCreacion;
 
