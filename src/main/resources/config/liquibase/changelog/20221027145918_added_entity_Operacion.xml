@@ -20,10 +20,10 @@
             <column name="monto" type="double">
                 <constraints nullable="true" />
             </column>
-            <column name="cuenta_origen" type="bigint">
+            <column name="cuenta_origen" type="varchar(50)">
                 <constraints nullable="true" />
             </column>
-            <column name="cuenta_destino" type="bigint">
+            <column name="cuenta_destino" type="varchar(50)">
                 <constraints nullable="true" />
             </column>
              <column name="usuario_creacion" type="varchar(200)">

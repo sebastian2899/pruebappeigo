@@ -40,10 +40,10 @@ public class Operacion implements Serializable {
     private Double monto;
 
     @Column(name = "cuenta_origen")
-    private Long cuentaOrigen;
+    private String cuentaOrigen;
 
     @Column(name = "cuenta_destino")
-    private Long cuentaDestino;
+    private String cuentaDestino;
     
     @Column(name = "usuario_creacion")
     private String usuarioCreacion;

@@ -1,19 +1,31 @@
 package co.com.prueba.peigo.web.rest;
 
-import co.com.prueba.peigo.repository.OperacionRepository;
-import co.com.prueba.peigo.service.OperacionService;
-import co.com.prueba.peigo.service.dto.OperacionDTO;
-import co.com.prueba.peigo.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import co.com.prueba.peigo.domain.Cuenta;
+import co.com.prueba.peigo.repository.CuentaRepository;
+import co.com.prueba.peigo.repository.OperacionRepository;
+import co.com.prueba.peigo.service.OperacionService;
+import co.com.prueba.peigo.service.dto.OperacionDTO;
+import co.com.prueba.peigo.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -34,10 +46,13 @@ public class OperacionResource {
     private final OperacionService operacionService;
 
     private final OperacionRepository operacionRepository;
+    
+    private final CuentaRepository cuentaRepository;
 
-    public OperacionResource(OperacionService operacionService, OperacionRepository operacionRepository) {
+    public OperacionResource(OperacionService operacionService, OperacionRepository operacionRepository, CuentaRepository cuentaRepository) {
         this.operacionService = operacionService;
         this.operacionRepository = operacionRepository;
+		this.cuentaRepository = cuentaRepository;
     }
 
     /**
@@ -53,6 +68,21 @@ public class OperacionResource {
         if (operacionDTO.getId() != null) {
             throw new BadRequestAlertException("A new operacion cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if (operacionDTO.getCuentaDestino().equals(operacionDTO.getCuentaOrigen())) {
+            throw new BadRequestAlertException("Las cuentas no pueden ser iguales ","cuentas", "cuentasIguales");
+        }
+        Optional<Cuenta> cuenta = cuentaRepository.findByNumber(operacionDTO.getCuentaOrigen());
+        if (!cuenta.isPresent()) {
+            throw new BadRequestAlertException("No se encontro la cuenta origen", "cuenta", "cuentaOrigen");
+        }
+		if(cuenta.get().getSaldo() < operacionDTO.getMonto()) {
+			throw new BadRequestAlertException("La cuenta no tiene fondos suficientes para la operación",ENTITY_NAME, "saldoCuenta");
+		}
+        cuenta = cuentaRepository.findByNumber(operacionDTO.getCuentaDestino());
+        if (!cuenta.isPresent()) {
+            throw new BadRequestAlertException("No se encontro la cuenta destino","cuenta", "cuentaDestino");
+        }
+        
         OperacionDTO result = operacionService.save(operacionDTO);
         return ResponseEntity
             .created(new URI("/api/operacions/" + result.getId()))
@@ -79,12 +109,27 @@ public class OperacionResource {
         if (operacionDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        if (operacionDTO.getCuentaDestino().equals(operacionDTO.getCuentaOrigen())) {
+            throw new BadRequestAlertException("Las cuentas no pueden ser iguales ","cuentas", "cuentasIguales");
+        }
         if (!Objects.equals(id, operacionDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
         if (!operacionRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+        
+        Optional<Cuenta> cuenta = cuentaRepository.findByNumber(operacionDTO.getCuentaOrigen());
+        if (!cuenta.isPresent()) {
+            throw new BadRequestAlertException("No se encontro la cuenta origen","cuenta", "cuentaOrigen");
+        }
+		if(cuenta.get().getSaldo() < operacionDTO.getMonto()) {
+			throw new BadRequestAlertException("La cuenta no tiene fondos suficientes para la operación",ENTITY_NAME, "saldoCuenta");
+		}
+        cuenta = cuentaRepository.findByNumber(operacionDTO.getCuentaDestino());
+        if (!cuenta.isPresent()) {
+            throw new BadRequestAlertException("No se encontro la cuenta destino","cuenta", "cuentaDestino");
         }
 
         OperacionDTO result = operacionService.update(operacionDTO);

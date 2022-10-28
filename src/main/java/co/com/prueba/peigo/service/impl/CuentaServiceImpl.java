@@ -103,6 +103,13 @@ public class CuentaServiceImpl implements CuentaService {
         log.debug("Request to get Cuenta : {}", id);
         return cuentaRepository.findById(id).map(cuentaMapper::toDto);
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<CuentaDTO> findByNumber(String numeroCuenta) {
+        log.debug("Request to get Cuenta : {}", numeroCuenta);
+        return cuentaRepository.findByNumber(numeroCuenta).map(cuentaMapper::toDto);
+    }
 
     @Override
     public void delete(Long id) {

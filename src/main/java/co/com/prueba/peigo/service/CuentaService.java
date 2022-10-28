@@ -1,8 +1,9 @@
 package co.com.prueba.peigo.service;
 
-import co.com.prueba.peigo.service.dto.CuentaDTO;
 import java.util.List;
 import java.util.Optional;
+
+import co.com.prueba.peigo.service.dto.CuentaDTO;
 
 /**
  * Service Interface for managing {@link co.com.prueba.peigo.domain.Cuenta}.
@@ -53,4 +54,6 @@ public interface CuentaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    
+    Optional<CuentaDTO> findByNumber(String numeroCuenta);
 }

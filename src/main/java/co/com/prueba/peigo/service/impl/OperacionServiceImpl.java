@@ -17,6 +17,7 @@ import co.com.prueba.peigo.domain.Operacion;
 import co.com.prueba.peigo.repository.OperacionRepository;
 import co.com.prueba.peigo.service.OperacionService;
 import co.com.prueba.peigo.service.TrazabilidadService;
+import co.com.prueba.peigo.service.dto.CuentaDTO;
 import co.com.prueba.peigo.service.dto.OperacionDTO;
 import co.com.prueba.peigo.service.dto.TrazabilidadDTO;
 import co.com.prueba.peigo.service.mapper.OperacionMapper;
@@ -36,12 +37,15 @@ public class OperacionServiceImpl implements OperacionService {
     
     private final TrazabilidadService trazabilidadService;
     
+    private final CuentaServiceImpl cuentaServiceImpl;
+    
     Gson gson = new Gson();
     
-    public OperacionServiceImpl(OperacionRepository operacionRepository, OperacionMapper operacionMapper, TrazabilidadService trazabilidadService) {
+    public OperacionServiceImpl(OperacionRepository operacionRepository, OperacionMapper operacionMapper, TrazabilidadService trazabilidadService, CuentaServiceImpl cuentaServiceImpl) {
         this.operacionRepository = operacionRepository;
         this.operacionMapper = operacionMapper;
 		this.trazabilidadService = trazabilidadService;
+		this.cuentaServiceImpl = cuentaServiceImpl;
     }
     
     private TrazabilidadDTO crearRegistroAuditoria(OperacionDTO cuentaDTO, Operacion cuenta) {
@@ -56,22 +60,50 @@ public class OperacionServiceImpl implements OperacionService {
     @Override
     public OperacionDTO save(OperacionDTO operacionDTO) {
         log.debug("Request to save Operacion : {}", operacionDTO);
+        operacionDTO.setNumeroOperacion(Math.random()+"");
         Operacion operacion = operacionMapper.toEntity(operacionDTO);
         operacion.setFechaCreacion(Instant.now());
         operacion = operacionRepository.save(operacion);
         //se registra trazabilidad del proceso
         trazabilidadService.save(crearRegistroAuditoria(operacionDTO, operacion));
+        //sumar a cuenta
+        sumarValorCuenta(operacionDTO.getCuentaDestino(), operacionDTO.getMonto());
+        //restar a cuenta
+        restarValorCuenta(operacionDTO.getCuentaOrigen(), operacionDTO.getMonto());
         return operacionMapper.toDto(operacion);
     }
 
-    @Override
+    private void sumarValorCuenta(String cuentaDestino, Double monto) {
+		Optional<CuentaDTO> cuenta = cuentaServiceImpl.findByNumber(cuentaDestino);
+		if(cuenta.isPresent()) {
+			cuenta.get().setSaldo(cuenta.get().getSaldo()+monto);
+		}
+		cuentaServiceImpl.update(cuenta.get());
+	}
+    
+    private void restarValorCuenta(String cuentaDestino, Double monto) {
+ 		Optional<CuentaDTO> cuenta = cuentaServiceImpl.findByNumber(cuentaDestino);
+ 		if(cuenta.isPresent()) {
+ 			cuenta.get().setSaldo(cuenta.get().getSaldo()-monto);
+ 		}
+ 		cuentaServiceImpl.update(cuenta.get());
+ 	}
+
+	@Override
     public OperacionDTO update(OperacionDTO operacionDTO) {
         log.debug("Request to save Operacion : {}", operacionDTO);
+        operacionDTO.setNumeroOperacion(Math.random()+"");
         Operacion operacion = operacionMapper.toEntity(operacionDTO);
         operacion.setFechaModificacion(Instant.now());
         operacion = operacionRepository.save(operacion);
         //se registra trazabilidad del proceso
         trazabilidadService.save(crearRegistroAuditoria(operacionDTO, operacion));
+      //se registra trazabilidad del proceso
+        trazabilidadService.save(crearRegistroAuditoria(operacionDTO, operacion));
+        //sumar a cuenta
+        sumarValorCuenta(operacionDTO.getCuentaDestino(), operacionDTO.getMonto());
+        //restar a cuenta
+        restarValorCuenta(operacionDTO.getCuentaOrigen(), operacionDTO.getMonto());
         return operacionMapper.toDto(operacion);
     }
 

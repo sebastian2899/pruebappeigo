@@ -17,9 +17,9 @@ public class OperacionDTO implements Serializable {
 
     private Double monto;
 
-    private Long cuentaOrigen;
+    private String cuentaOrigen;
 
-    private Long cuentaDestino;
+    private String cuentaDestino;
     
     private String usuarioCreacion;
 

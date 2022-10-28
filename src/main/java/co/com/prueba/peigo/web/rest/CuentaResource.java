@@ -1,5 +1,6 @@
 package co.com.prueba.peigo.web.rest;
 
+import co.com.prueba.peigo.domain.Cuenta;
 import co.com.prueba.peigo.repository.CuentaRepository;
 import co.com.prueba.peigo.service.CuentaService;
 import co.com.prueba.peigo.service.dto.CuentaDTO;
@@ -52,6 +53,10 @@ public class CuentaResource {
         log.debug("REST request to save Cuenta : {}", cuentaDTO);
         if (cuentaDTO.getId() != null) {
             throw new BadRequestAlertException("A new cuenta cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        Optional<Cuenta> cuenta = cuentaRepository.findByNumber(cuentaDTO.getNumeroCuenta());
+        if (cuenta.isPresent()) {
+            throw new BadRequestAlertException("Ya existe una cuenta con este número",ENTITY_NAME, "idexistsDos");
         }
         CuentaDTO result = cuentaService.save(cuentaDTO);
         return ResponseEntity
